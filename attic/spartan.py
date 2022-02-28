@@ -40,6 +40,9 @@ class SpartanRequestHandler(StreamRequestHandler):
         if not path:
             raise ValueError('Not Found')
 
+        if content_length != '0':
+            raise ValueError('This server does not allow input')
+
         path = unquote(path)
 
         if resolved_file := self.resolver.resolve_file(path):
@@ -70,15 +73,19 @@ class SpartanRequestHandler(StreamRequestHandler):
         self.wfile.write(f"{code} {meta}\r\n".encode("ascii"))
 
 if __name__ == '__main__':
-    resolver = StaticFileResolver('/home/johan.egneblad/git/gemini/content')
-    #resolver = StaticFileResolver('test')
+    from argparse import ArgumentParser
+    parser = ArgumentParser(description='Serve a static spartan server')
+    parser.add_argument('root', nargs='?', help='document root to serve')
+    parser.add_argument('--host', '-s', default='127.0,0,1', help='host to serve on (default 127.0.0.1)')
+    parser.add_argument('--port', '-p', type=int, default=3000, help='port to serve on (default 3000)')
+    args = parser.parse_args()
+
+    print(args.root)
+
+    resolver = StaticFileResolver(args.root or '.')
     resolver.scan()
-    #resolver.add_file('/test.gmi', 'test.gmi')
-    #resolver.add_file('/index.gmi', 'index.gmi')
-    #resolver.add_file('/', 'index.gmi')
-    #resolver.add_dir('/fake/', ['index.gmi', 'test.gmi'])
     ThreadingTCPServer.allow_reuse_address = True
-    server = ThreadingTCPServer(('127.0.0.1', 3000),
+    server = ThreadingTCPServer(('127.0.0.1', args.port),
                                 SpartanRequestHandler.maker(resolver))
 
     try:
