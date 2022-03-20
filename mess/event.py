@@ -2,6 +2,7 @@ import typing as t
 import asyncio
 import logging
 import weakref
+import traceback
 
 
 logger = logging.getLogger(__name__)
@@ -21,7 +22,6 @@ class Event:
 
     def fire(self, *args, **keywargs) -> t.List[asyncio.Future]:
         loop = asyncio.get_running_loop()
-        logger.info(f'Loop is {id(loop)}')
         futures = []
         for handler_ref in self.__handlers:
             handler = handler_ref()
