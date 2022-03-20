@@ -1,6 +1,7 @@
 import typing as t
 import asyncio
 import logging
+import weakref
 
 
 logger = logging.getLogger(__name__)
@@ -11,18 +12,19 @@ class Event:
         self.__handlers: t.List[t.Coroutine] = []
 
     def __iadd__(self, handler: t.Coroutine):
-        self.__handlers.append(handler)
+        self.__handlers.append(weakref.WeakMethod(handler))
         return self
 
-    def __isub__(self, handler: t.Coroutine):
-        self.__handlers.remove(handler)
-        return self
+    #def __isub__(self, handler: t.Coroutine):
+    #    self.__handlers.remove(handler)
+    #    return self
 
     def fire(self, *args, **keywargs) -> t.List[asyncio.Future]:
         loop = asyncio.get_running_loop()
         logger.info(f'Loop is {id(loop)}')
         futures = []
-        for handler in self.__handlers:
+        for handler_ref in self.__handlers:
+            handler = handler_ref()
             if asyncio.iscoroutinefunction(handler):
                 futures.append(asyncio.run_coroutine_threadsafe(self._check_call(handler(*args, **keywargs)), loop))
             elif asyncio.iscoroutine(handler):
