@@ -55,6 +55,6 @@ async def startup():
         logger.info(f'{channel} {await channel.get_messages()}')
 
 
-loop = asyncio.get_event_loop()
+loop = asyncio.new_event_loop()
 asyncio.run_coroutine_threadsafe(Event._check_call(startup()), loop)
 loop.run_forever()
