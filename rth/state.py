@@ -57,9 +57,10 @@ class State:
             self.counts[thing] = -1
         else:
             self.counts[thing] -= 1
+        if self.counts[thing] <= 0 and thing in self.comments:
+            del self.comments[thing]
 
     def comment(self, thing: str, comment: str):
-        logger.debug(f'Trying to comment on thing "{thing}"')
         if thing not in self.things:
             raise KeyError(f'There is no such thing: {thing}')
         if thing not in self.counts:

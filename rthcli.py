@@ -35,6 +35,7 @@ def do_thing(stuff: Stuff):
         for thing, category in sorted(stuff.state.things.items(), key=lambda x: (state.things[x[0]], x[1], x[0])):
             print(category, thing)
 
+
 def do_count(stuff: Stuff):
     if stuff.args.mode == 'add':
         stuff.chain.add_thing(args.thing)
@@ -52,6 +53,16 @@ def do_count(stuff: Stuff):
 def do_comment(stuff: Stuff):
     if stuff.args.mode == 'add':
         stuff.chain.comment(stuff.args.thing, stuff.args.comment)
+
+
+def do_serve(stuff: Stuff):
+    import fastapi
+
+    app = fastapi.FastAPI()
+
+    @app.get('/{token}/cat')
+    def read_cat():
+        return stuff.state.categories
 
 
 if __name__ == "__main__":
@@ -79,6 +90,9 @@ if __name__ == "__main__":
     parser_comment.add_argument('thing', nargs='?')
     parser_comment.add_argument('comment', nargs='?')
     parser_comment.set_defaults(func=do_comment)
+
+    parser_serve = subparsers.add_parser('serve', help='start a http server')
+    parser_serve.set_defaults(func=do_serve)
 
     args = parser.parse_args()
 
