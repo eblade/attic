@@ -3,10 +3,19 @@
 
 from dataclasses import dataclass
 import argparse
+import os
 import sys
+import logging
 from rth.state import State
 from rth.chain import Chain
 
+
+logger = logging.getLogger(__name__)
+if os.path.exists('attic.log'):
+    os.remove('attic.log')
+logging.basicConfig(filename='rthcli.log',
+                    level=logging.DEBUG,
+                    format='%(asctime)s - %(levelname)s - %(threadName)s - %(name)s - %(message)s')
 
 @dataclass
 class Stuff:
@@ -34,7 +43,15 @@ def do_count(stuff: Stuff):
     elif stuff.args.mode == 'list':
         for thing, count in sorted(stuff.state.counts.items(), key=lambda x: (x[1], x[0])):
             if stuff.args.show_all or count > 0:
+                comments = stuff.state.comments.get(thing, [])
                 print(thing, count)
+                for comment in comments:
+                    print(' -', comment)
+
+
+def do_comment(stuff: Stuff):
+    if stuff.args.mode == 'add':
+        stuff.chain.comment(stuff.args.thing, stuff.args.comment)
 
 
 if __name__ == "__main__":
@@ -56,6 +73,12 @@ if __name__ == "__main__":
     parser_count.add_argument('--show-all', '-A', action='store_true')
     parser_count.add_argument('thing', nargs='?')
     parser_count.set_defaults(func=do_count)
+
+    parser_comment = subparsers.add_parser('comment', help='work with comment')
+    parser_comment.add_argument('--add', '-a', action='store_const', dest='mode', const='add')
+    parser_comment.add_argument('thing', nargs='?')
+    parser_comment.add_argument('comment', nargs='?')
+    parser_comment.set_defaults(func=do_comment)
 
     args = parser.parse_args()
 

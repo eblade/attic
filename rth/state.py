@@ -1,4 +1,8 @@
-from typing import Dict, Set
+import logging
+from typing import Dict, List
+
+
+logger = logging.getLogger(__name__)
 
 
 class State:
@@ -6,6 +10,7 @@ class State:
         self.categories: Dict[str, str] = {}
         self.things: Dict[str, str] = {}
         self.counts: Dict[str, int] = {}
+        self.comments: Dict[str, List[str]] = {}
 
     def load_categories(self, path: str):
         self.categories = {}
@@ -52,3 +57,19 @@ class State:
             self.counts[thing] = -1
         else:
             self.counts[thing] -= 1
+
+    def comment(self, thing: str, comment: str):
+        logger.debug(f'Trying to comment on thing "{thing}"')
+        if thing not in self.things:
+            raise KeyError(f'There is no such thing: {thing}')
+        if thing not in self.counts:
+            logger.warn(f'Tried to comment on uncounted thing "{thing}"')
+            return
+        current_count = self.counts[thing]
+        if current_count <= 0:
+            logger.warn(f'Tried to comment on thing "{thing}" with count {current_count}')
+            return
+        if thing not in self.comments:
+            self.comments[thing] = [comment]
+        else:
+            self.comments[thing].append(comment)
