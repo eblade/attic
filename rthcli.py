@@ -23,7 +23,7 @@ def do_cat(stuff: Stuff):
 
 def do_thing(stuff: Stuff):
     if stuff.args.mode == 'list':
-        for thing, category in sorted(stuff.state.things.items(), key=lambda x: (self.state.things[x[0]], x[1], x[0])):
+        for thing, category in sorted(stuff.state.things.items(), key=lambda x: (state.things[x[0]], x[1], x[0])):
             print(category, thing)
 
 def do_count(stuff: Stuff):
