@@ -1,9 +1,16 @@
-from fastapi import FastAPI, Depends, HTTPException, status
+from typing import List
+from fastapi import FastAPI, Request, Depends, HTTPException, Form, status
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 
 from rth.state import State
 from rth.chain import Chain
 
 app = FastAPI()
+app.mount("/static", StaticFiles(directory="rth/static"), name="static")
+
+templates = Jinja2Templates(directory='rth/templates')
 
 state = State()
 state.load_categories('rth/data/categories')
@@ -48,7 +55,7 @@ def read_list(token: str = Depends(check_token)):
         result.append((cat, thing, comments))
     result.sort()
     return {
-        'list': [{
+        'items': [{
             'cat': cat,
             'thing': thing,
             'comments': comments,
@@ -69,6 +76,18 @@ def uncheck_item(thing: str, token: str = Depends(check_token)):
 @app.post('/{token}/list/{thing}')
 def comment_item(thing: str, comment: str, token: str = Depends(check_token)):
     chain.comment(thing, comment)
+
+
+@app.get('/{token}', response_class=HTMLResponse)
+async def index_html(request: Request, token: str = Depends(check_token)):
+    print('test')
+    return templates.TemplateResponse('index.html', {'request': request, 'items': read_list(token)['items']})
+
+
+@app.put('/{token}', response_class=HTMLResponse)
+async def update_index_html(request: Request, check: List[str] = Form(...), token: str = Depends(check_token)):
+    print(check)
+    return templates.TemplateResponse('index.html', {'request': request, 'items': read_list(token)['items']})
 
 
 @app.on_event('shutdown')
