@@ -1,5 +1,5 @@
 import logging
-from typing import Dict, List
+from typing import Dict, List, Set
 
 
 logger = logging.getLogger(__name__)
@@ -9,7 +9,7 @@ class State:
     def __init__(self):
         self.categories: Dict[str, str] = {}
         self.things: Dict[str, str] = {}
-        self.counts: Dict[str, int] = {}
+        self.unchecked: Set[str] = set()
         self.comments: Dict[str, List[str]] = {}
 
     def load_categories(self, path: str):
@@ -45,30 +45,20 @@ class State:
     def add(self, thing: str):
         if thing not in self.things:
             raise KeyError(f'There is no such thing: {thing}')
-        if thing not in self.counts:
-            self.counts[thing] = 1
-        else:
-            self.counts[thing] += 1
+        self.unchecked.add(thing)
 
     def remove(self, thing: str):
         if thing not in self.things:
             raise KeyError(f'There is no such thing: {thing}')
-        if thing not in self.counts:
-            self.counts[thing] = -1
-        else:
-            self.counts[thing] -= 1
-        if self.counts[thing] <= 0 and thing in self.comments:
+        self.unchecked.discard(thing)
+        if thing in self.comments:
             del self.comments[thing]
 
     def comment(self, thing: str, comment: str):
         if thing not in self.things:
             raise KeyError(f'There is no such thing: {thing}')
-        if thing not in self.counts:
-            logger.warn(f'Tried to comment on uncounted thing "{thing}"')
-            return
-        current_count = self.counts[thing]
-        if current_count <= 0:
-            logger.warn(f'Tried to comment on thing "{thing}" with count {current_count}')
+        if thing not in self.unchecked:
+            logger.warn(f'Tried to comment on ununchecked thing "{thing}"')
             return
         if thing not in self.comments:
             self.comments[thing] = [comment]

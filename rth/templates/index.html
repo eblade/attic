@@ -8,7 +8,7 @@
     <form method="get">
     {% for item in items %}
         <div>
-            <input type="checkbox" id="{{ item['thing'] }}" name="check" value="{{ item['thing'] }}^{{ item['count'] }}" />
+            <input type="checkbox" id="{{ item['thing'] }}" name="check" value="{{ item['thing'] }}" />
             <label>{{ item['thing'] }}</label>
         </div>
     {% endfor %}

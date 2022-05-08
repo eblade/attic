@@ -1,3 +1,5 @@
+import os
+import logging
 from typing import List, Optional
 from itertools import groupby
 from fastapi import FastAPI, Request, Depends, HTTPException, Form, status, Query
@@ -17,12 +19,17 @@ state = State()
 state.load_categories('rth/data/categories')
 state.load_things('rth/data/things')
 
+with open('token', 'r') as tp:
+    security_token = tp.read().strip()
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(filename=f'rthserve-{security_token}.log',
+                    level=logging.DEBUG,
+                    format='%(asctime)s - %(levelname)s - %(threadName)s - %(name)s - %(message)s')
+
 cp = open('chain', 'r+', encoding='utf8')
 chain = Chain(state, cp)
 chain.load_previous()
-
-with open('token', 'r') as tp:
-    security_token = tp.read().strip()
 
 
 def check_token(token: str):
@@ -41,27 +48,20 @@ def read_things(token: str = Depends(check_token)):
     return state.things
 
 
-@app.get('/{token}/count')
-def read_count(token: str = Depends(check_token)):
-    return state.counts
-
-
 @app.get('/{token}/list')
 def read_list(token: str = Depends(check_token)):
-    things_with_count = [(thing, count) for thing, count in state.counts.items() if count > 0]
     result = []
-    for thing, count in things_with_count:
+    for thing in state.unchecked:
         cat = state.things[thing]
         comments = state.comments.get(thing, [])
-        result.append((cat, thing, count, comments))
+        result.append((cat, thing, comments))
     result.sort()
     return {
         'items': [{
             'cat': cat,
             'thing': thing,
-            'count': count,
             'comments': comments,
-        } for cat, thing, count, comments in result]
+        } for cat, thing, comments in result]
     }
 
 
@@ -87,8 +87,8 @@ async def index_html(request: Request,
                      token: str = Depends(check_token)):
     if check is not None:
         print("Checking", check)
-        for thing, count in map(lambda x: x.split('^', 1), check):
-            chain.remove_thing(thing, current_count=int(count))
+        for thing in check:
+            chain.remove_thing(thing)
 
     if uncheck is not None:
         print("Unchecking", uncheck)
@@ -100,8 +100,7 @@ async def index_html(request: Request,
 
 @app.get('/{token}/select.html', response_class=HTMLResponse)
 async def select_html(request: Request, token: str = Depends(check_token)):
-    things_with_count = set(thing for thing, count in state.counts.items() if count > 0)
-    groups = groupby(sorted((cat, thing) for thing, cat in state.things.items()), lambda x: x[0])
+    groups = groupby(sorted((cat, thing) for thing, cat in state.things.items() if thing not in state.unchecked), lambda x: x[0])
 
     return templates.TemplateResponse('add.html', {
         'request': request,
