@@ -102,7 +102,7 @@ async def index_html(request: Request,
 async def select_html(request: Request, token: str = Depends(check_token)):
     groups = groupby(sorted((cat, thing) for thing, cat in state.things.items() if thing not in state.unchecked), lambda x: x[0])
 
-    return templates.TemplateResponse('add.html', {
+    return templates.TemplateResponse('select.html', {
         'request': request,
         'token': token,
         'cats': [{'name': state.categories[g[0]], 'items': list(item[1] for item in g[1])} for g in groups]})
