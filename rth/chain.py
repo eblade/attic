@@ -47,7 +47,11 @@ class Chain:
         self.state.add(thing)
         self.store('a', thing)
 
-    def remove_thing(self, thing: str):
+    def remove_thing(self, thing: str, current_count: typing.Optional[int] = None):
+        if current_count is not None:
+            actual_count = self.state.counts.get(thing, 0)
+            if actual_count == current_count - 1:
+                logging.debug(f'Same remove attempted by multiple clients for thing "{thing}"')
         self.state.remove(thing)
         self.store('r', thing)
 
