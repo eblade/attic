@@ -3,7 +3,7 @@ import logging
 from typing import List, Optional
 from itertools import groupby
 from fastapi import FastAPI, Request, Depends, HTTPException, Form, status, Query
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
@@ -86,13 +86,13 @@ async def index_html(request: Request,
                      uncheck: Optional[List[str]] = Query(None),
                      token: str = Depends(check_token)):
     if check is not None:
-        print("Checking", check)
-        for thing in check:
-            chain.remove_thing(thing)
+        list(map(chain.remove_thing, check))
+        return RedirectResponse('index.html')
 
     if uncheck is not None:
-        print("Unchecking", uncheck)
         list(map(chain.add_thing, uncheck))
+        return RedirectResponse('index.html')
+
     return templates.TemplateResponse('index.html', {
         'request': request,
         'token': token,
