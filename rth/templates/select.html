@@ -1,0 +1,24 @@
+<html>
+<head>
+    <title>RTH</title>
+    <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet">
+</head>
+<body>
+    <h1>Add things</h1>
+    <form action="index.html" method="get">
+    {% for cat in cats %}
+        <h2>{{ cat['name'] }}</h2>
+        {% for item in cat['items'] %}
+        <div>
+            <input type="checkbox" id="{{ item['thing'] }}" name="uncheck" value="{{ item }}" />
+            <label>{{ item }}</label>
+        </div>
+        {% endfor %}
+    {% endfor %}
+    <div>
+        <button type="submit">Add</button>
+    </div>
+    </form>
+</body>
+</html>
+
