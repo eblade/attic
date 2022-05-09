@@ -10,8 +10,12 @@
         <h2>{{ cat['name'] }}</h2>
         {% for item in cat['items'] %}
         <div>
-            <input type="checkbox" id="{{ item['thing'] }}" name="uncheck" value="{{ item }}" />
-            <label>{{ item }}</label>
+            <input
+                type="checkbox"
+                id="{{ item['thing'] }}"
+                name="uncheck"
+                value="{{ item['thing'] }}" />
+            <label>{{ item['thing'] }}</label>
         </div>
         {% endfor %}
     {% endfor %}

@@ -48,23 +48,23 @@ def read_things(token: str = Depends(check_token)):
     return state.things
 
 
+def get_items(checked: bool):
+    cat_orders = {key: n for n, (key, _) in enumerate(state.categories.items())}
+    groups = groupby(sorted((cat_orders[cat], cat, thing) for thing, cat in state.things.items() if checked ^ (thing in state.unchecked)), lambda x: x[1])
+    return {'cats': [{
+        'name': state.categories[g[0]],
+        'short': g[0],
+        'items': list({
+            'thing': thing,
+            'comments': state.comments.get(thing, [])
+            } for _, cat, thing in g[1])
+        } for g in groups
+    ]}
+
+
 @app.get('/{token}/list')
 def read_list(token: str = Depends(check_token)):
-    result = []
-    cat_orders = {key: n for n, (key, _) in enumerate(state.categories.items())}
-    for thing in state.unchecked:
-        cat = state.things[thing]
-        cat_order = cat_orders[cat]
-        comments = state.comments.get(thing, [])
-        result.append((cat_order, cat, thing, comments))
-    result.sort()
-    return {
-        'items': [{
-            'cat': cat,
-            'thing': thing,
-            'comments': comments,
-        } for _, cat, thing, comments in result]
-    }
+    return get_items(False)
 
 
 @app.put('/{token}/list/{thing}')
@@ -98,16 +98,15 @@ async def index_html(request: Request,
     return templates.TemplateResponse('index.html', {
         'request': request,
         'token': token,
-        'items': read_list(token)['items']})
+        'cats': get_items(False)['cats']})
+
 
 @app.get('/{token}/select.html', response_class=HTMLResponse)
 async def select_html(request: Request, token: str = Depends(check_token)):
-    groups = groupby(sorted((cat, thing) for thing, cat in state.things.items() if thing not in state.unchecked), lambda x: x[0])
-
     return templates.TemplateResponse('select.html', {
         'request': request,
         'token': token,
-        'cats': [{'name': state.categories[g[0]], 'items': list(item[1] for item in g[1])} for g in groups]})
+        'cats': get_items(True)['cats']})
 
 @app.on_event('shutdown')
 def on_shutdown():

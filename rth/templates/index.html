@@ -6,7 +6,9 @@
 <body>
     <h1>Listan</h1>
     <form method="get">
-    {% for item in items %}
+    {% for cat in cats %}
+        <h2>{{ cat['name'] }}</h2>
+        {% for item in cat['items'] %}
         <div>
             <input
                 type="checkbox"
@@ -16,6 +18,7 @@
                 value="{{ item['thing'] }}" />
             <label>{{ item['thing'] }}</label>
         </div>
+        {% endfor %}
     {% endfor %}
     <div>
         <button type="submit">Update</button>
