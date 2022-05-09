@@ -51,17 +51,19 @@ def read_things(token: str = Depends(check_token)):
 @app.get('/{token}/list')
 def read_list(token: str = Depends(check_token)):
     result = []
+    cat_orders = {key: n for n, (key, _) in enumerate(state.categories.items())}
     for thing in state.unchecked:
         cat = state.things[thing]
+        cat_order = cat_orders[cat]
         comments = state.comments.get(thing, [])
-        result.append((cat, thing, comments))
+        result.append((cat_order, cat, thing, comments))
     result.sort()
     return {
         'items': [{
             'cat': cat,
             'thing': thing,
             'comments': comments,
-        } for cat, thing, comments in result]
+        } for _, cat, thing, comments in result]
     }
 
 

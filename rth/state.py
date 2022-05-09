@@ -1,5 +1,6 @@
 import logging
 from typing import Dict, List, Set
+from collections import OrderedDict
 
 
 logger = logging.getLogger(__name__)
@@ -13,7 +14,7 @@ class State:
         self.comments: Dict[str, List[str]] = {}
 
     def load_categories(self, path: str):
-        self.categories = {}
+        self.categories = OrderedDict()
         with open(path, 'r') as f:
             for line in f.readlines():
                 line = line.strip()
