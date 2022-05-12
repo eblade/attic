@@ -82,6 +82,11 @@ def comment_item(thing: str, comment: str, token: str = Depends(check_token)):
     chain.comment(thing, comment)
 
 
+@app.get('/{token}', response_class=HTMLResponse)
+async def index_without_index_html(token: str = Depends(check_token)):
+        return RedirectResponse(f'/{token}/index.html')
+
+
 @app.get('/{token}/index.html', response_class=HTMLResponse)
 async def index_html(request: Request,
                      check: Optional[List[str]] = Query(None),
