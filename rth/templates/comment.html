@@ -1,0 +1,30 @@
+<html>
+<head>
+    <title>Kommentera {{ item['thing'] }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+    {% include 'styles.css' %}
+    </style>
+</head>
+<body>
+    <h1>Kommentera {{ item['thing'] }}</h1>
+    <form method="get" action="../index.html">
+        <div>
+            <input
+                type="hidden"
+                id"thing"
+                name="thing"
+                value="{{ item['thing'] }}" />
+            <input
+                type="text"
+                id="comment"
+                name="comment"
+                value="{{ item['comment'] or '' }}" />
+        </div>
+        <input type="submit" value="Uppdatera" />
+    </div>
+    </form>
+    <a class="menu" href="../index.html">Avbryt</a>
+</body>
+</html>
+

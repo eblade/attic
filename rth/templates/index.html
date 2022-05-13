@@ -21,6 +21,10 @@
                 name="check"
                 value="{{ item['thing'] }}" />
             <label for="{{ item['thing'] }}">{{ item['thing'] }}</label>
+            {% if item.get('comment') %}
+            <i>{{ item['comment'] }}</i>
+            {% endif %}
+            <a href="{{ item['thing'] }}/comment.html">...</a>
         </div>
         {% endfor %}
     {% endfor %}

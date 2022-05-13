@@ -61,7 +61,4 @@ class State:
         if thing not in self.unchecked:
             logger.warn(f'Tried to comment on ununchecked thing "{thing}"')
             return
-        if thing not in self.comments:
-            self.comments[thing] = [comment]
-        else:
-            self.comments[thing].append(comment)
+        self.comments[thing] = comment

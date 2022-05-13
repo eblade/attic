@@ -21,13 +21,13 @@ class Chain:
             return
         self.persistance.seek(0)
         for line in self.persistance.readlines():
-            instruction, rest = line.strip().split(maxsplit=1)
+            instruction, rest = line.strip().split('\t', maxsplit=1)
             if instruction == 'a':
                 self.add_thing(rest)
             elif instruction == 'r':
                 self.remove_thing(rest)
             elif instruction == 'c':
-                thing, comment = rest.strip().split(maxsplit=1)
+                thing, comment = rest.strip().split('\t', maxsplit=1)
                 self.comment(thing, comment)
             else:
                 raise ValueError(f'Unrecognized instruction: "{instruction}"')
@@ -39,7 +39,8 @@ class Chain:
             return
         if self.persistance is None:
             return
-        s = f'{instruction} {" ".join(data)}'
+        tab = '\t'
+        s = f'{instruction}{tab}{tab.join(data)}'
         self.persistance.write(f'{s}\n')
         logger.debug(f'Stored "{s}"')
 

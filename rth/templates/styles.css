@@ -1,0 +1,45 @@
+body {
+    padding: 0;
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+    font-family: sans;
+}
+
+h1 {
+    background-color: black;
+    color: white;
+    padding: 5pt;
+    margin-bottom: 0pt;
+}
+
+h2 {
+    background-color: gray;
+    color: white;
+    padding: 5pt;
+    margin-top: 0pt;
+    margin-bottom: 1pt;
+}
+
+.menu {
+    font-size: 16pt;
+    padding: 3pt;
+}
+
+input[type=submit] {
+    margin-top: 1em;
+    padding: 8pt;
+    font-size: 16pt;
+    margin-left: 8pt;
+}
+
+input[type=text] {
+    margin-top: 1em;
+    padding: 8pt;
+    font-size: 16pt;
+    margin-left: 8pt;
+}
+
+label {
+    font-size: 16pt;
+}

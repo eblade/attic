@@ -56,10 +56,17 @@ def get_items(checked: bool):
         'short': g[0],
         'items': list({
             'thing': thing,
-            'comments': state.comments.get(thing, [])
+            'comment': state.comments.get(thing, None)
             } for _, cat, thing in g[1])
         } for g in groups
     ]}
+
+
+def get_item(thing):
+    return {
+        'thing': thing,
+        'comment': state.comments.get(thing, None)
+    }
 
 
 @app.get('/{token}/list')
@@ -91,13 +98,25 @@ async def index_without_index_html(token: str = Depends(check_token)):
 async def index_html(request: Request,
                      check: Optional[List[str]] = Query(None),
                      uncheck: Optional[List[str]] = Query(None),
+                     thing: Optional[str] = Query(None),
+                     comment: Optional[str] = Query(None),
                      token: str = Depends(check_token)):
+
+    changed = False
+
     if check is not None:
         list(map(chain.remove_thing, check))
-        return RedirectResponse('index.html')
+        changed = True
 
     if uncheck is not None:
         list(map(chain.add_thing, uncheck))
+        changed = True
+
+    if comment is not None and thing is not None:
+        chain.comment(thing, comment)
+        changed = True
+
+    if changed:
         return RedirectResponse('index.html')
 
     return templates.TemplateResponse('index.html', {
@@ -112,6 +131,15 @@ async def select_html(request: Request, token: str = Depends(check_token)):
         'request': request,
         'token': token,
         'cats': get_items(True)['cats']})
+
+
+@app.get('/{token}/{thing}/comment.html', response_class=HTMLResponse)
+async def comment_html(request: Request, thing: str, token: str = Depends(check_token)):
+    return templates.TemplateResponse('comment.html', {
+        'request': request,
+        'token': token,
+        'item': get_item(thing)})
+
 
 @app.on_event('shutdown')
 def on_shutdown():
