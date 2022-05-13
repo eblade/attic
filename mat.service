@@ -1,0 +1,50 @@
+[Unit]
+Description=mat
+After=network.target
+
+[Service]
+User=mat
+Restart=always
+Type=simple
+CapabilityBoundingSet=
+RestrictAddressFamilies=AF_INET
+ProtectControlGroups=yes
+PrivateTmp=yes
+PrivateDevices=yes
+PrivateUsers=yes
+ProtectControlGroups=yes
+#ProtectHome=yes
+#ProtectHostname=yes
+#ProtectClock=yes
+#ProtectKernelLogs=yes
+#ProtectKernelModules=yes
+#ProtectKernelTunables=yes
+#ProtectProc=invisible
+ProtectSystem=strict
+#ProcSubset=pid
+RestrictNamespaces=yes
+RestrictRealtime=yes
+NoNewPrivileges=yes
+MemoryDenyWriteExecute=yes
+SystemCallArchitectures=native
+LockPersonality=yes
+RestrictSUIDSGID=yes
+RemoveIPC=yes
+UMask=177
+SystemCallFilter=~@clock @debug @module @reboot @privileged @cpu-emulation @obsolete @mount @resources
+#ReadWritePaths=/var/log/molly/access.log /var/log/molly/error.log 
+StandardError=journal
+StandardOutput=journal
+StandardInput=null
+WorkingDirectory=/home/mat/attic
+#Environment="PATH=/home/mat/attic/venv/bin"
+ExecStart=/home/mat/attic/venv/bin/uvicorn rthserve:app --host 127.0.0.1 --port 8000
+
+[Install]
+WantedBy=multi-user.target
+
+#SELINUX
+# semanage fcontext -a -t bin_t '/home/mat/attic/venv/bin/uvicorn'
+# restorecon -Fv /home/mat/attic/venv/bin/uvicorn
+# semanage fcontext -a -t bin_t '/home/mat/attic/venv/bin/python3'
+# restorecon -Fv /home/mat/attic/venv/bin/python3
