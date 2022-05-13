@@ -7,7 +7,7 @@ g gul lök
 g röd lök
 g salladslök
 g vitlök
-g charlottenlök
+g scharlottenlök
 g purjolök
 g rättika
 g vindruvor röda
@@ -22,7 +22,7 @@ g melon vatten
 g melon honung
 g melon nät
 g melon galia
-g melon cantelope
+g melon cantaloupe
 g rädisor
 g kålrot
 g palsternacka
@@ -55,6 +55,8 @@ k korv
 k kassler
 k bacon
 k tofu
+k lax färsk hel
+k vit fisk färsk
 
 m mjölk
 m fil
@@ -71,9 +73,24 @@ m feta
 m mozzarella
 m ägg
 
-f torskrygg
-f lax
-f räkor
+y torskrygg fryst
+y lax fryst
+y räkor frysta
+y ärtor frysta
+
+c tortillas
+c jalapenos
+c tacochips
+c salsa
+c kokosmjölk
+
+s vanish
+s tvättmedel färg
+s tvättmedel vit
+s tvättmedel dentol
+s städservetter
+s såpa
+s fönsterputs
 
 t granola
 t havregryn
@@ -93,15 +110,32 @@ t salt
 t peppar
 t muskot
 t pasta
+t pärlcouscous
+t durrakorn
+t matvete
+t mathavre
+t bulgur
+t couscous
+t solrosfrön
+t mandlar
 
 h tvål
 h tvål barn
 h schampoo
 h schampoo barn
-h bomulssrondeller
+h bomullsrondeller
 h topz
 h kleenex
 h bubbelbad
 h tandkräm
 h tandkräm barn
 h våtservetter
+h hushållspapper torky
+h toapapper
+
+ö tranbär
+ö russin
+ö övrig torkad frukt
+ö glass 
+ö godis 
+ö bananchips
