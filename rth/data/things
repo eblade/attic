@@ -3,6 +3,7 @@ g potatis fast
 g potatis mjölig
 g potatis bak
 g potatis färsk
+g sötpotatis
 g gul lök
 g röd lök
 g salladslök
@@ -10,6 +11,9 @@ g vitlök
 g scharlottenlök
 g purjolök
 g rättika
+g tomat kvist
+g tomat
+g tomat körsbär
 g vindruvor röda
 g vindruvor gröna
 g äpple
@@ -30,6 +34,7 @@ g sallad färdigskuren
 g isbergssallad
 g blåbär
 g hallon
+g jordgubbar
 g avokado
 g mango
 g sharonfrukt
@@ -95,6 +100,7 @@ s såpa
 s fönsterputs
 
 t granola
+t havreringar
 t havregryn
 t mjöl vete
 t mjöl vete special
@@ -105,6 +111,7 @@ t mjöl majs
 t kaffe
 t kaffefilter melitta 1x4
 t rapsolja
+t soja
 t olivolja
 t vinäger
 t balsamvinäger
@@ -148,3 +155,9 @@ h tvättservetter
 ö glass
 ö godis
 ö bananchips
+ö valnötter
+ö cashewnötter
+ö torkad mango
+ö frysta blåbär
+ö frysta hallon
+ö frysta körsbär
