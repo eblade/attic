@@ -14,11 +14,13 @@ g rättika
 g tomat kvist
 g tomat
 g tomat körsbär
+g gurka
 g vindruvor röda
 g vindruvor gröna
 g äpple
 g päron
 g banan
+g apelsin
 g groddar
 g ärtskott
 g alfalfa
@@ -120,6 +122,8 @@ t salt
 t peppar
 t muskot
 t pasta
+t ris
+t råris
 t pärlcouscous
 t durrakorn
 t matvete
@@ -128,6 +132,8 @@ t bulgur
 t couscous
 t solrosfrön
 t mandlar
+t kryddor
+
 
 a barnmat
 a klämmis
