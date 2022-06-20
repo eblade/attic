@@ -41,6 +41,9 @@ g avokado
 g mango
 g sharonfrukt
 g granatäpple
+g paprika
+g majs färsk
+g spenat
 
 b knäckebröd
 b majskaka
@@ -64,6 +67,7 @@ k bacon
 k tofu
 k lax färsk hel
 k vit fisk färsk
+k grillkött
 
 m mjölk
 m fil
@@ -74,12 +78,14 @@ m creme fraiche
 m gräddfil
 m bregott
 m smör
+m smör för bakning
 m ost
 m ost riven
 m feta
 m mozzarella
 m ägg
 m mandelmjölk
+m majonäs
 
 y torskrygg fryst
 y lax fryst
@@ -133,7 +139,6 @@ t couscous
 t solrosfrön
 t mandlar
 t kryddor
-
 
 a barnmat
 a klämmis
