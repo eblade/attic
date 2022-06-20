@@ -27,8 +27,11 @@ class Chain:
             elif instruction == 'r':
                 self.remove_thing(rest)
             elif instruction == 'c':
-                thing, comment = rest.strip().split('\t', maxsplit=1)
-                self.comment(thing, comment)
+                if '\t' in rest:
+                    thing, comment = rest.strip().split('\t', maxsplit=1)
+                    self.comment(thing, comment)
+                else:
+                    self.comment(rest, '')
             else:
                 raise ValueError(f'Unrecognized instruction: "{instruction}"')
         self.loaded = True
