@@ -1,56 +1,43 @@
-g morötter
-g potatis fast
-g potatis mjölig
-g potatis bak
-g potatis färsk
-g sötpotatis
-g gul lök
-g röd lök
-g salladslök
-g vitlök
-g scharlottenlök
-g purjolök
-g rättika
-g tomat kvist
-g tomat
-g tomat körsbär
-g gurka
-g vindruvor röda
-g vindruvor gröna
-g äpple
-g päron
-g banan
-g apelsin
-g groddar
-g ärtskott
-g alfalfa
-g melon vatten
-g melon honung
-g melon nät
-g melon galia
-g melon cantaloupe
-g rädisor
-g kålrot
-g palsternacka
-g sallad färdigskuren
-g isbergssallad
-g blåbär
-g hallon
-g jordgubbar
-g avokado
-g mango
-g sharonfrukt
-g granatäpple
-g paprika
-g majs färsk
-g spenat
+r apelsin
+r banan
+r bär
+r frukt
+r melon
+r päron
+r vindruvor
+r äpple
 
-b knäckebröd
-b majskaka
-b surdegsbröd
+g alfalfa
+g avokado
+g groddar
+g grönsak
+g gul lök
+g gurka
+g kålrot
+g majskolv
+g mango
+g morötter
+g palsternacka
+g paprika
+g potatis
+g purjolök
+g rädisor
+g rättika
+g röd lök
+g sallad
+g salladslök
+g scharlottenlök
+g spenat
+g sötpotatis
+g tomat
+g tomat små
+g vitlök
+g ärtskott
+
+b bröd hårt
+b bröd mjukt
 b hamburgerbröd
 b korvbröd
-b tunnbröd
 
 f tortellini
 f blodpudding
@@ -58,9 +45,9 @@ f blodpudding
 k kyckling hel
 k kycklingben
 k kycklingfilé
-k blandfärs
-k nötfärs
-k fläskfärs
+k färs band
+k färs nöt
+k färs fläsk
 k korv
 k kassler
 k bacon
@@ -72,13 +59,10 @@ k grillkött
 m mjölk
 m fil
 m yoghurt
-m yoghurt grekisk
-m yoghurt turkisk
 m creme fraiche
 m gräddfil
 m bregott
 m smör
-m smör för bakning
 m ost
 m ost riven
 m feta
@@ -87,23 +71,22 @@ m ägg
 m mandelmjölk
 m majonäs
 
-y torskrygg fryst
 y lax fryst
+y vit fisk fryst
 y räkor frysta
 y ärtor frysta
 y köttbullar frysta
+y majs fryst
 
-c tortillas
-c jalapenos
-c tacochips
-c salsa
-c kokosmjölk
-c sambal oelek
+v tortillas
+v jalapenos
+v tacochips
+v salsa
+v kokosmjölk
+v sambal oelek
 
 s vanish
-s tvättmedel färg
-s tvättmedel vit
-s tvättmedel dentol
+s tvättmedel
 s städservetter
 s såpa
 s fönsterputs
@@ -116,30 +99,26 @@ t mjöl vete
 t mjöl vete special
 t mjöl råg
 t mjöl graham
-t mjöl mandel
-t mjöl majs
+t mjöl annat
 t kaffe
 t kaffefilter melitta 1x4
 t rapsolja
 t soja
 t olivolja
 t vinäger
-t balsamvinäger
 t salt
 t peppar
-t muskot
+t krydda
 t pasta
 t ris
-t råris
-t pärlcouscous
-t durrakorn
-t matvete
-t mathavre
-t bulgur
-t couscous
+t gryn/korn
 t solrosfrön
 t mandlar
 t kryddor
+t ketchup
+t senap
+t majs burk
+t buljong
 
 a barnmat
 a klämmis
@@ -161,7 +140,8 @@ h våtservetter
 h hushållspapper torky
 h toapapper
 h tvättservetter
-
+h diskmedel
+h tvättsvamp
 ö tranbär
 ö russin
 ö övrig torkad frukt
@@ -171,7 +151,5 @@ h tvättservetter
 ö valnötter
 ö cashewnötter
 ö torkad mango
-ö frysta blåbär
-ö frysta hallon
-ö frysta körsbär
+ö frysta bär
 ö kompostpåsar
