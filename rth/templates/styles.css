@@ -40,6 +40,14 @@ input[type=text] {
     margin-left: 8pt;
 }
 
+input#search {
+    width: 100%;
+    margin 0pt;
+    padding: 8pt;
+    font-size: 16pt;
+    border: 0;
+}
+
 label {
     font-size: 16pt;
 }

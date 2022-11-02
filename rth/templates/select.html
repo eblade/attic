@@ -9,11 +9,12 @@
 </head>
 <body>
     <h1>Lägg till saker</h1>
-    <form action="index.html" method="get">
+    <input id="search" onkeyup="filter_changed()" autofocus />
+    <form action="index.html" method="get" id="form">
     {% for cat in cats %}
         <h2>{{ cat['name'] }}</h2>
         {% for item in cat['items'] %}
-        <div>
+        <div class="thing">
             <input
                 type="checkbox"
                 id="{{ item['thing'] }}"
@@ -28,5 +29,24 @@
     </div>
     </form>
 </body>
+<script>
+function filter_changed() {
+    var input = document.getElementById("search");
+    var filter = input.value.toUpperCase();
+    var form = document.getElementById("form");
+    var items = form.getElementsByTagName("div");
+
+    for (var i = 0; i < items.length; i++) {
+        var item = items[i];
+        var label = item.getElementsByTagName("label")[0];
+        var text = label.textContent || label.innerText;
+        if (text.toUpperCase().indexOf(filter) > -1) {
+            item.style.display = "";
+        } else {
+            item.style.display = "none";
+        }
+    }
+}
+</script>
 </html>
 
