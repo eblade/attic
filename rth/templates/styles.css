@@ -16,9 +16,11 @@ h1 {
 h2 {
     background-color: gray;
     color: white;
-    padding: 5pt;
+    padding: 1pt;
     margin-top: 0pt;
     margin-bottom: 1pt;
+    font-size: 8pt;
+    text-transform: uppercase;
 }
 
 .menu {
